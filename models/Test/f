@@ -1,0 +1,144 @@
+-- phpMyAdmin SQL Dump
+-- version 4.5.4.1deb2ubuntu2.1
+-- http://www.phpmyadmin.net
+--
+-- Хост: localhost
+-- Час створення: Чрв 26 2019 р., 13:57
+-- Версія сервера: 5.7.23-0ubuntu0.16.04.1
+-- Версія PHP: 7.0.32-0ubuntu0.16.04.1
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- База даних: `library`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблиці `authors`
+--
+
+CREATE TABLE `authors` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `dob` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп даних таблиці `authors`
+--
+
+INSERT INTO `authors` (`id`, `name`, `dob`) VALUES
+(1, 'Ремарк', '2019-06-12'),
+(2, 'Рей Бредбери', '2019-06-21'),
+(3, 'Пушкин', '2019-06-13');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблиці `author_book`
+--
+
+CREATE TABLE `author_book` (
+  `author_id` int(11) DEFAULT NULL,
+  `book_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп даних таблиці `author_book`
+--
+
+INSERT INTO `author_book` (`author_id`, `book_id`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 4),
+(2, 5),
+(1, 6),
+(2, 6),
+(3, 6),
+(3, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблиці `books`
+--
+
+CREATE TABLE `books` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `dob` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп даних таблиці `books`
+--
+
+INSERT INTO `books` (`id`, `name`, `dob`) VALUES
+(1, 'На западном фронте без перемен', NULL),
+(2, 'Тени в раю', NULL),
+(3, 'Два товарища', NULL),
+(4, '456 градус по фаренгейту', NULL),
+(5, 'Марсианин', NULL),
+(6, 'супергкига', NULL);
+
+--
+-- Індекси збережених таблиць
+--
+
+--
+-- Індекси таблиці `authors`
+--
+ALTER TABLE `authors`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Індекси таблиці `author_book`
+--
+ALTER TABLE `author_book`
+  ADD KEY `fk_book` (`book_id`),
+  ADD KEY `fk_author` (`author_id`);
+
+--
+-- Індекси таблиці `books`
+--
+ALTER TABLE `books`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT для збережених таблиць
+--
+
+--
+-- AUTO_INCREMENT для таблиці `authors`
+--
+ALTER TABLE `authors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT для таблиці `books`
+--
+ALTER TABLE `books`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- Обмеження зовнішнього ключа збережених таблиць
+--
+
+--
+-- Обмеження зовнішнього ключа таблиці `author_book`
+--
+ALTER TABLE `author_book`
+  ADD CONSTRAINT `fk_author` FOREIGN KEY (`author_id`) REFERENCES `authors` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_book` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
